@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Accupass Campaign October 2014</title>
+  <meta charset="UTF-8">
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<!-- Place this data between the <head> tags of your website -->
+<meta name="description" content="Page description. No longer than 155 characters." />
+
+<!-- Google Authorship and Publisher Markup -->
+<link rel="author" href="https://plus.google.com/[Google+_Profile]/posts" />
+<link rel="publisher" href="https://plus.google.com/[Google+_Page_Profile]"/>
+
+<!-- Schema.org markup for Google+ -->
+<meta itemprop="name" content="The Name or Title Here">
+<meta itemprop="description" content="This is the page description">
+<meta itemprop="image" content="http://www.example.com/image.jpg">
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@publisher_handle">
+<meta name="twitter:title" content="Page Title">
+<meta name="twitter:description" content="Page description less than 200 characters">
+<meta name="twitter:creator" content="@author_handle">
+<!-- Twitter summary card with large image must be at least 280x150px -->
+<meta name="twitter:image:src" content="http://www.example.com/image.html">
+
+<!-- Open Graph data -->
+<meta property="og:title" content="Title Here" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.example.com/" />
+<meta property="og:image" content="http://example.com/image.jpg" />
+<meta property="og:description" content="Description Here" />
+<meta property="og:site_name" content="Site Name, i.e. Moz" />
+<meta property="article:published_time" content="2013-09-17T05:59:00+01:00" />
+<meta property="article:modified_time" content="2013-09-16T19:08:47+01:00" />
+<meta property="article:section" content="Article Section" />
+<meta property="article:tag" content="Article Tag" />
+<meta property="fb:admins" content="Facebook numberic ID" />
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/campaign_fb.css"/>
+
+</head>
+
+<body>
+  <div id="fb-root"></div>
+
+
+
+
+  <script>
+  $( document ).ready(function() {
+        $(".results").hide();
+    });
+
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('==============statusChangeCallback===================');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      // document.getElementById('firstText').innerHTML = 'You already used this app before - your prediction is as follows.';
+      console.log('status: connected');
+      testAPI();
+      predictEvent();
+      $(".loginBtn").hide();
+      $(".revokePermissionsBtn").show();
+      $(".results").show();
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      console.log('status: not authorized');
+      document.getElementById('status').innerHTML = 'Please log ' +
+      'into this app.';
+      document.getElementById('event').innerHTML = '';
+      $(".loginBtn").show();
+      $(".revokePermissionsBtn").hide();
+      $(".results").hide();
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      console.log('status: else');
+      document.getElementById('status').innerHTML = 'Please log ' +
+      'into Facebook.';
+      document.getElementById('event').innerHTML = '';
+      $(".loginBtn").show();
+      $(".revokePermissionsBtn").hide();
+      $(".results").hide();
+
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    console.log('==============checkLoginState===============');
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '199776800128908',
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.1' // use version 2.1
+  });
+
+  // Now that we've initialized the JavaScript SDK, we call 
+  // FB.getLoginStatus().  This function gets the state of the
+  // person visiting this page and can return one of three states to
+  // the callback you provide.  They can be:
+  //
+  // 1. Logged into your app ('connected')
+  // 2. Logged into Facebook, but not your app ('not_authorized')
+  // 3. Not logged into Facebook and can't tell if they are logged into
+  //    your app or not.
+  //
+  // These three cases are handled in the callback function.
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+};
+
+  // Load the SDK asynchronously
+  // (function(d, s, id) {
+  //   var js, fjs = d.getElementsByTagName(s)[0];
+  //   if (d.getElementById(id)) return;
+  //   js = d.createElement(s); js.id = id;
+  //   js.src = "//connect.facebook.net/en_US/sdk.js";
+  //   fjs.parentNode.insertBefore(js, fjs);
+  // }(document, 'script', 'facebook-jssdk'));
+
+
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=199776800128908&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+
+
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function testAPI() {
+    console.log('=============== testAPI ================');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name + response.email + response.birthday);
+      document.getElementById('status').innerHTML =
+      'Thanks for logging in, ' + response.name + '!' + ' Your email is ' + response.email + ' and you were born on ' + response.birthday + ', but we will not send you any birthday present.' ;
+    });
+  }
+
+  function predictEvent() {
+    console.log('============ predictEvent ===========');
+    FB.api('/me', function(response) {
+      var date = new Date(response.birthday);
+      var d = date.getDate()
+      var m = date.getMonth() + 1;
+      var y = date.getFullYear();
+      console.log('birthday ' + response.birthday);
+      console.log('date ' + date);
+      console.log('Year is ' + y);
+
+      if (y>2000){
+        document.getElementById('event').innerHTML = 'Born after 2000? You should go to see this BLABLABLA';
+      }
+      else if (y<2001 && y>1989){
+        document.getElementById('event').innerHTML = '90s kid? Come and see this BLABLABLA';
+      }
+      else if (y<1990){
+        document.getElementById('event').innerHTML = 'This event is perfect for you! BLABLABAL';
+      }
+      else {
+        document.getElementById('event').innerHTML = 'YAY! This is for you!';
+      }
+    });
+  }
+
+  function login(){
+    console.log('============== login =============');
+    FB.login(function(response) {
+      if (response.status === 'connected') {
+    // Logged into your app and Facebook.
+
+  } else if (response.status === 'not_authorized') {
+    // The person is logged into Facebook, but not your app.
+
+  } else {
+    // The person is not logged into Facebook, so we're not sure if
+    // they are logged into this app or not.
+  }
+  checkLoginState();
+}, {scope: 'public_profile,email,user_birthday'});
+  }
+
+  function logout(){
+    FB.logout(function(response) {
+  // user is now logged out
+});
+  }
+
+  function revokePermissions(){
+    console.log('============= revokePermissions =========');
+    FB.api('/me/permissions', 'delete', function(response) {
+    console.log('permissions revoked? ' + response.success); // true
+  });
+    console.log('end fn permRevoked');
+    checkLoginState();
+    console.log('after fn checkLoginState');
+  }
+
+
+// $( document ).ready(function(){
+//   statusChangeCallback();
+// });
+
+</script>
+
+
+
+
+<!--
+  Below we include the Login Button social plugin. This button uses
+  the JavaScript SDK to present a graphical Login button that triggers
+  the FB.login() function when clicked.
+-->
+
+<!-- <fb:login-button scope="public_profile,email,user_birthday" onlogin="checkLoginState();">
+</fb:login-button> -->
+
+
+<div class="header_bar">
+  <img src="http://www.accupass.com/images/base/accupass_logo.png" />
+</div>
+
+<div class="second_bar">
+  <div class="container">
+  <p class="fb-like-text">Text text text text text</p>
+  <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+  </div>
+</div>
+
+<h1 id="fb-welcome"></h1>
+
+<div class="container main text-center">
+	<div class="row">
+		<!-- <div class="col-xs-12">Title</div> -->
+		<!-- <div class="col-xs-6"><img src="http://placehold.it/315x210"></div>
+		<div class="col-xs-6"><img src="http://placehold.it/315x210"></div>
+		<div class="col-xs-6"><img src="http://placehold.it/315x210"></div>
+		<div class="col-xs-6"><img src="http://placehold.it/315x210"></div> -->
+    <div class="col-xs-12"><img src="http://placehold.it/640x426"></div>
+    <div class="col-xs-12">Text text Text text Text text Text text Text text Text textText text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text Text text</div>
+		<button type="button" class="btn btn-primary btn-lg" onclick="login();" onlogin="checkLoginState();">START!</button>
+
+<div id="firstText"></div>
+<div id="status"></div>
+<div class="results">
+
+
+  <div id="event"></div>
+
+  
+</div>
+
+    <div class="col-xs-12">
+			<div class="fb-comments" data-href="http://example.com/comments" data-width="800" data-numposts="5" data-colorscheme="light" ></div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<!-- <h1>Predict an event for you based on your birthday</h1> -->
+
+<!-- 
+<div>firstLineTextfirstLineTextfirstLineTextfirstLineText<br>firstLineTextfirstLineTextfirstLineTextfirstLineText</div>
+
+<input class="loginBtn" type="button" value="Click here to login with Facebook and get an event suggestion" onclick="login();" onlogin="checkLoginState();" /> -->
+
+
+
+<div id="firstText"></div>
+<div id="status"></div>
+
+
+<div class="results">
+
+  <!-- <img src="http://placehold.it/470x246"> -->
+
+  <div id="event"></div>
+
+  <!-- <div>更多有趣測驗</div>
+  <img src="http://placehold.it/656x113">
+  <img src="http://placehold.it/656x113">
+ -->
+  
+</div>
+
+
+
+<!-- <input class="logoutBtn" type="button" value="logout" onclick="logout();" />
+-->
+
+
+<footer>
+	<div class="container">
+		<p>text text text text text</p>
+    <input class="revokePermissionsBtn" type="button" value="revoke permissions" onclick="revokePermissions();" />
+	</div>
+</footer>
+</body>
+</html>
